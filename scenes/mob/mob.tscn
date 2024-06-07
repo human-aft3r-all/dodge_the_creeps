@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ve67rv21ngn0"]
+[gd_scene load_steps=11 format=3 uid="uid://ve67rv21ngn0"]
 
 [ext_resource type="Texture2D" uid="uid://iih050uv6b" path="res://art/enemyFlyingAlt_1.png" id="1_5ttx2"]
 [ext_resource type="Script" path="res://scenes/mob/mob.gd" id="1_6kqf3"]
@@ -48,6 +48,20 @@ animations = [{
 radius = 36.0
 height = 100.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c1pqv"]
+properties/0/path = NodePath(".:synced_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:direction")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:mob_type")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
 [node name="Mob" type="RigidBody2D" groups=["mobs"]]
 collision_mask = 0
 gravity_scale = 0.0
@@ -65,5 +79,8 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_14at3")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_c1pqv")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
